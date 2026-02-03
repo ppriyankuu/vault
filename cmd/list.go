@@ -49,6 +49,11 @@ func listCommand(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
+	if len(dirMap) == 0 {
+		fmt.Println("No notes found. Run `vault new` to create one.")
+		return nil
+	}
+
 	// Get and sort directory names
 	var dirs []string
 	for dir := range dirMap {
