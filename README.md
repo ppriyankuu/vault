@@ -22,6 +22,7 @@ vault init        # initialize a vault
 vault new         # create a new note
 vault list        # list all notes
 vault open        # open an existing note in Vim
+vault delete      # delete a note
 vault search      # search notes
 vault restore     # view git history and restore notes
 vault sync        # sync notes using git
@@ -42,6 +43,7 @@ vault [command] --help
 │   ├── new.go
 │   ├── open.go
 │   ├── restore.go
+│   ├── delete.go
 │   ├── root.go
 │   ├── search.go
 │   └── sync.go
