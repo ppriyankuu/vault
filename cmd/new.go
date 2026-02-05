@@ -1,6 +1,8 @@
 package cmd
 
 import (
+	"os"
+
 	"github.com/ppriyankuu/vault/internal/config"
 	"github.com/ppriyankuu/vault/internal/editor"
 	"github.com/ppriyankuu/vault/internal/notes"
@@ -22,6 +24,18 @@ func newCommand(cmd *cobra.Command, args []string) error {
 	}
 
 	path, err := notes.Create(cfg.Root, args[0])
+	if err != nil {
+		return err
+	}
+
+	template := `# [Topic]
+	
+### [sub-point]
+
+[text]
+`
+
+	err = os.WriteFile(path, []byte(template), 0644)
 	if err != nil {
 		return err
 	}

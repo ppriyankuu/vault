@@ -95,13 +95,13 @@ func searchCommand(cmd *cobra.Command, args []string) error {
 
 	// Copy first result to clipboard if available
 	if len(relativePaths) > 0 {
-		copyToClipboard(relativePaths[0])
+		copyToClipboard(relativePaths[0], len(relativePaths) > 1)
 	}
 
 	return nil
 }
 
-func copyToClipboard(text string) {
+func copyToClipboard(text string, multiple bool) {
 	var cmd *exec.Cmd
 
 	if _, err := exec.LookPath("pbcopy"); err == nil {
@@ -119,7 +119,11 @@ func copyToClipboard(text string) {
 	if cmd != nil {
 		cmd.Stdin = strings.NewReader(text)
 		if err := cmd.Run(); err == nil {
-			fmt.Printf("\n✓ path copied to clipboard: %s\n", text)
+			if multiple {
+				fmt.Printf("\n✓ copied the top-most path to clipboard: %s\n", text)
+			} else {
+				fmt.Printf("\n✓ path copied to clipboard: %s\n", text)
+			}
 		}
 	}
 }
