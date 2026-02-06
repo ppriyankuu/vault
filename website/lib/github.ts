@@ -17,7 +17,7 @@ async function fetchRepoPath(path = ""): Promise<GitHubFile[]> {
         headers['Authorization'] = `Bearer ${GITHUB_TOKEN}`;
     }
 
-    const res = await fetch(url, { headers });
+    const res = await fetch(url, { headers, next: { revalidate: 60 } });
 
     if (!res.ok) {
         console.error(`GitHub API Error for ${path}:`, res.status, res.statusText);
@@ -74,7 +74,10 @@ export async function fetchTopicsWithNotes(): Promise<TopicNotes[]> {
 
 export async function fetchMarkdownContent(filePath: string): Promise<string> {
     const response = await fetch(
-        `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}/${filePath}`
+        `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}/${filePath}`,
+        {
+            next: { revalidate: 60 },
+        }
     );
 
     if (!response.ok) {

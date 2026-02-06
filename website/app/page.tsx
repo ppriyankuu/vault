@@ -3,6 +3,8 @@ import { fetchTopicsWithNotes, fetchMarkdownContent } from '@/lib/github';
 import { parseMarkdown } from '@/lib/markdown';
 import { Note } from '@/types';
 
+export const revalidate = 60;
+
 export default async function HomePage() {
   let notePosts: Note[] = [];
   let topics = [];
