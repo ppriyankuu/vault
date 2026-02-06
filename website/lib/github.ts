@@ -73,16 +73,29 @@ export async function fetchTopicsWithNotes(): Promise<TopicNotes[]> {
 }
 
 export async function fetchMarkdownContent(filePath: string): Promise<string> {
-    const response = await fetch(
-        `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}/${filePath}`,
-        {
-            next: { revalidate: 60 },
-        }
-    );
+    const url = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${filePath}?ref=${BRANCH}`;
 
-    if (!response.ok) {
-        throw new Error(`Failed to fetch file: ${response.status}`);
+    const headers: HeadersInit = {
+        Accept: "application/vnd.github.v3+json",
+    };
+
+    if (GITHUB_TOKEN) {
+        headers.Authorization = `Bearer ${GITHUB_TOKEN}`;
     }
 
-    return response.text();
+    const res = await fetch(url, {
+        headers,
+        next: { revalidate: 60 },
+    });
+
+    if (!res.ok) {
+        throw new Error(`Failed to fetch file ${filePath}: ${res.status}`);
+    }
+
+    const data = await res.json();
+
+    // GitHub returns base64-encoded content
+    const decoded = Buffer.from(data.content, "base64").toString("utf-8");
+
+    return decoded;
 }
