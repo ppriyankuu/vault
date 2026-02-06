@@ -6,7 +6,7 @@ import (
 )
 
 func NotePath(root, name string) string {
-	return filepath.Join(root, name) + ".txt"
+	return filepath.Join(root, name) + ".md"
 }
 
 func Create(root, name string) (string, error) {
