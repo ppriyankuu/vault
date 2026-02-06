@@ -10,10 +10,10 @@ import (
 )
 
 var deleteCmd = &cobra.Command{
-	Use:     "delete <relative path to your topic",
-	Example: "\tdelete dbms/normalization\n\tdelete system-design/load-balancer",
-	Short:   "Delete a note",
-	Args:    cobra.ExactArgs(1),
+	Use:     "delete <relative path> [relative path ...]",
+	Example: "\tdelete dbms/normalization\n\tdelete dbms/normalization AI/RAG",
+	Short:   "Delete one or more notes",
+	Args:    cobra.MinimumNArgs(1),
 	RunE:    deleteCommand,
 }
 
@@ -23,17 +23,30 @@ func deleteCommand(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	path := notes.NotePath(cfg.Root, args[0])
+	var hadError bool
 
-	if _, err := os.Stat(path); err != nil {
-		return fmt.Errorf("note does not exist")
+	for _, arg := range args {
+		path := notes.NotePath(cfg.Root, arg)
+
+		if _, err := os.Stat(path); err != nil {
+			fmt.Printf("✗ not found: %s\n", arg)
+			hadError = true
+			continue
+		}
+
+		if err := os.Remove(path); err != nil {
+			fmt.Printf("✗ failed to delete: %s (%v)\n", arg, err)
+			hadError = true
+			continue
+		}
+
+		fmt.Printf("✓ deleted: %s\n", arg)
 	}
 
-	if err := os.Remove(path); err != nil {
-		return err
+	if hadError {
+		return fmt.Errorf("some notes could not be deleted")
 	}
 
-	fmt.Printf("✓ deleted: %s\n", args[0])
 	return nil
 }
 

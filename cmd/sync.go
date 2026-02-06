@@ -20,7 +20,7 @@ var syncCmd = &cobra.Command{
 		commands := [][]string{
 			{"git", "add", "."},
 			{"git", "commit", "-m", "vault sync"},
-			{"git", "push"},
+			{"git", "push", "origin", "main"},
 		}
 
 		for _, c := range commands {

@@ -26,24 +26,31 @@ func listCommand(cmd *cobra.Command, args []string) error {
 	// Map to store directory structure
 	dirMap := make(map[string][]string)
 
-	// Collect all .txt files
-	err = filepath.Walk(cfg.Root, func(path string, info os.FileInfo, err error) error {
-		if err != nil || info.IsDir() {
-			return nil
-		}
-		if strings.HasSuffix(path, ".txt") {
-			rel, _ := filepath.Rel(cfg.Root, path)
-			rel = strings.TrimSuffix(rel, ".txt")
+	// Collect all .md files
+  err = filepath.Walk(cfg.Root, func(path string, info os.FileInfo, err error) error {
+    if err != nil || info.IsDir() {
+      return nil
+    }
 
-			// Split path into components
-			dir := filepath.Dir(rel)
-			file := filepath.Base(rel)
+    if !strings.HasSuffix(path, ".md") {
+      return nil
+    }
 
-			// Store in map
-			dirMap[dir] = append(dirMap[dir], file)
-		}
-		return nil
-	})
+    rel, _ := filepath.Rel(cfg.Root, path)
+
+    // Ignore README.md at root
+    if rel == "README.md" {
+      return nil
+    }
+
+    rel = strings.TrimSuffix(rel, ".md")
+
+    dir := filepath.Dir(rel)
+    file := filepath.Base(rel)
+
+    dirMap[dir] = append(dirMap[dir], file)
+    return nil
+  })
 
 	if err != nil {
 		return err
