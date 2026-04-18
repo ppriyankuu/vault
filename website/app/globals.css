@@ -1,20 +1,16 @@
 @import "tailwindcss";
 
-/* :root {
-  --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 17, 17, 17;
-  --background-end-rgb: 17, 17, 17;
-} */
+:root {
+  --background: #020617; /* slate-950 */
+}
 
-/* body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
-} */
+body {
+  background-color: var(--background);
+  color: #f8fafc; /* slate-50 */
+}
 
 .markdown-body {
-  color: #c9d1d9;
+  color: #cbd5e1; /* slate-300 */
   word-wrap: break-word;
 }
 
@@ -28,6 +24,7 @@
   margin-bottom: 16px;
   font-weight: 600;
   line-height: 1.25;
+  color: #f1f5f9; /* slate-100 */
 }
 
 .markdown-body p {
@@ -38,14 +35,16 @@
 .markdown-body img {
   max-width: 100%;
   box-sizing: border-box;
+  border-radius: 8px;
 }
 
 .markdown-body code {
   padding: 0.2em 0.4em;
   margin: 0;
   font-size: 85%;
-  background-color: rgba(110, 118, 129, 0.4);
+  background-color: rgba(30, 41, 59, 0.6); /* slate-800 */
   border-radius: 6px;
+  color: #e2e8f0; /* slate-200 */
 }
 
 .markdown-body pre {
@@ -53,12 +52,13 @@
   overflow: auto;
   font-size: 85%;
   line-height: 1.45;
-  background-color: #161b22;
-  border-radius: 6px;
+  background-color: #0f172a; /* slate-900 */
+  border-radius: 8px;
+  border: 1px solid rgba(51, 65, 85, 0.5); /* slate-700 */
 }
 
 .markdown-body blockquote {
   padding: 0 1em;
-  color: #8b949e;
-  border-left: 0.25em solid #30363d;
+  color: #94a3b8; /* slate-400 */
+  border-left: 0.25em solid #334155; /* slate-700 */
 }
