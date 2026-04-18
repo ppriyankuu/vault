@@ -2,6 +2,7 @@
 
 import { useNotes } from '@/context';
 import NoteCard from '@/components/noteCard';
+import { Computer } from "lucide-react";
 
 export default function HomePageContent() {
     const { topics, notes, searchQuery, setSearchQuery } = useNotes();
@@ -26,36 +27,44 @@ export default function HomePageContent() {
 
     return (
         <div className="flex flex-col items-center w-full">
-            <h1 className="
-                text-4xl md:text-5xl font-extrabold text-white
-                mb-8 text-center
-                py-4 px-8
+            <div className="
+                w-full max-w-5xl
+                flex items-center justify-between
+                mb-8
+                py-4 px-12
                 bg-linear-to-r from-slate-800 to-slate-900
                 border border-slate-700/50
                 rounded-2xl
                 shadow-[0_8px_30px_rgb(0,0,0,0.4)]
                 backdrop-blur-md
-                z-20
-                tracking-tight
             ">
-                Notes I push to GitHub.
-            </h1>
+                <h1 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight">
+                    Notes.
+                </h1>
+
+                <div className='flex gap-2 ml-2 items-center'>
+                    <h3 className='font-mono'>Github</h3>
+                    <a
+                        href="https://github.com/ppriyankuu"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-2 rounded-lg border border-slate-700/50 hover:border-slate-500 hover:bg-slate-700/40 transition-all"
+                    >
+                        <Computer className="w-6 h-6 text-slate-300 hover:text-white transition-colors" />
+                    </a>
+                </div>
+            </div>
 
             {/* Search Bar */}
             <div className="w-full max-w-2xl mb-12">
                 <div className="relative group">
-                    <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
-                        <svg className="w-5 h-5 text-slate-400 group-focus-within:text-blue-400 transition-colors" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                        </svg>
-                    </div>
-                    <input 
-                        type="text" 
-                        className="block w-full p-4 pl-12 text-sm text-white bg-slate-900/60 border border-slate-700 rounded-xl focus:ring-blue-500 focus:border-blue-500 placeholder-slate-400 shadow-inner backdrop-blur-sm transition-all outline-hidden" 
-                        placeholder="Search notes by title, topic, or content..." 
+                    <input
+                        type="text"
+                        className="block w-full py-4 px-6 text-sm text-white bg-slate-900/60 border border-slate-700 rounded-xl focus:ring-blue-500 focus:border-blue-500 placeholder-slate-400 shadow-inner backdrop-blur-sm transition-all outline-hidden"
+                        placeholder="Search notes by title, topic, or content..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        required 
+                        required
                     />
                 </div>
             </div>
@@ -74,7 +83,7 @@ export default function HomePageContent() {
                                 <h2 className="text-2xl font-bold text-white tracking-wide uppercase bg-slate-800/80 px-4 py-2 rounded-lg border border-slate-700/50 shadow-sm inline-block">
                                     {group.topic}
                                 </h2>
-                                <div className="h-px bg-gradient-to-r from-slate-700 to-transparent flex-1 ml-4 opacity-50"></div>
+                                <div className="h-px bg-linear-to-r from-slate-700 to-transparent flex-1 ml-4 opacity-50"></div>
                             </div>
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                                 {group.notes.map((post) => (
