@@ -39,7 +39,7 @@ export default function HomePageContent() {
                 backdrop-blur-md
             ">
                 <h1 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight">
-                    Notes.
+                    Vault of Notes.
                 </h1>
 
                 <div className='flex gap-2 ml-2 items-center'>
