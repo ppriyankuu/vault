@@ -20,9 +20,9 @@ export default async function NotePage({
         return (
             <div className="min-h-screen bg-gray-950">
                 <Navbar />
-                <main className="container mx-auto px-4 py-8 max-w-3xl">
+                <main className="mx-auto px-2 sm:px-4 md:px-6 py-8 max-w-5xl lg:max-w-5xl xl:max-w-6xl">
                     {/* Content card */}
-                    <article className="bg-gray-800/60 backdrop-blur-sm rounded-xl p-6 md:p-8 border border-gray-700/50 shadow-lg">
+                    <article className="bg-gray-800/60 backdrop-blur-sm rounded-xl p-3 md:p-8 border border-gray-700/50 shadow-lg">
                         <h1 className="text-2xl md:text-3xl font-bold text-white mb-3">
                             {post.title}
                         </h1>
