@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { fetchMarkdownContent } from "@/lib/github";
+import { fetchMarkdownContent, fetchFileLastCommitDate } from "@/lib/github";
 import { parseMarkdown } from "@/lib/markdown";
 import NoteContent from "@/components/noteContent";
 import Navbar from "@/components/navbar";
@@ -14,8 +14,9 @@ export default async function NotePage({
     try {
         const path = `${topic}/${slug}.md`;
         const content = await fetchMarkdownContent(path);
+        const lastModifiedDate = await fetchFileLastCommitDate(path);
 
-        const post = parseMarkdown(content, `${slug}.md`, topic);
+        const post = parseMarkdown(content, `${slug}.md`, topic, lastModifiedDate || undefined);
 
         return (
             <div className="min-h-screen bg-gray-950">

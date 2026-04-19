@@ -1,4 +1,4 @@
-import { fetchTopicsWithNotes, fetchMarkdownContent } from '@/lib/github';
+import { fetchTopicsWithNotes, fetchMarkdownContent, fetchFileLastCommitDate } from '@/lib/github';
 import { parseMarkdown } from '@/lib/markdown';
 import { NotesProvider } from '@/context';
 import { TopicNotes, Note } from '@/types';
@@ -17,7 +17,8 @@ export default async function NotesProviderServer({
         const promises = topics.flatMap((topic) =>
             topic.files.map(async (file) => {
                 const content = await fetchMarkdownContent(file.path);
-                return parseMarkdown(content, file.name, topic.topic);
+                const lastModifiedDate = await fetchFileLastCommitDate(file.path);
+                return parseMarkdown(content, file.name, topic.topic, lastModifiedDate || undefined);
             })
         );
         

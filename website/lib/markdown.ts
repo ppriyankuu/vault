@@ -4,7 +4,8 @@ import matter from "gray-matter";
 export function parseMarkdown(
     content: string,
     filename: string,
-    topic: string
+    topic: string,
+    fallbackDate?: string
 ): Note {
     const { data, content: markdownContent } = matter(content);
 
@@ -22,7 +23,7 @@ export function parseMarkdown(
         slug,
         title,
         content: markdownContent,
-        date: data.date || new Date().toISOString(),
+        date: data.date || fallbackDate || new Date().toISOString(),
         excerpt,
         topic,
     };

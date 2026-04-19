@@ -99,3 +99,30 @@ export async function fetchMarkdownContent(filePath: string): Promise<string> {
 
     return decoded;
 }
+
+export async function fetchFileLastCommitDate(filePath: string): Promise<string | null> {
+    const url = `https://api.github.com/repos/${OWNER}/${REPO}/commits?path=${filePath}&page=1&per_page=1`;
+
+    const headers: HeadersInit = {
+        Accept: "application/vnd.github.v3+json",
+    };
+
+    if (GITHUB_TOKEN) {
+        headers.Authorization = `Bearer ${GITHUB_TOKEN}`;
+    }
+
+    const res = await fetch(url, {
+        headers,
+        next: { revalidate: 60 },
+    });
+
+    if (!res.ok) {
+        return null;
+    }
+
+    const commits = await res.json();
+    if (commits && commits.length > 0) {
+        return commits[0].commit.committer.date;
+    }
+    return null;
+}
