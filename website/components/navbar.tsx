@@ -8,9 +8,15 @@ export default function Navbar() {
     const { topics } = useNotes();
     const [openTopic, setOpenTopic] = useState<string | null>(null);
     const [isMobileOpen, setIsMobileOpen] = useState(false);
+    // New state for mobile accordion
+    const [mobileExpandedTopic, setMobileExpandedTopic] = useState<string | null>(null);
 
     const toggleTopic = (topic: string) => {
         setOpenTopic(openTopic === topic ? null : topic);
+    };
+
+    const toggleMobileTopic = (topic: string) => {
+        setMobileExpandedTopic(mobileExpandedTopic === topic ? null : topic);
     };
 
     return (
@@ -37,7 +43,8 @@ export default function Navbar() {
 
                             {openTopic === topic.topic && (
                                 <div className="absolute left-0 mt-2 bg-slate-900/95 backdrop-blur-xl border border-slate-700/60 rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.4)] w-56 z-50 overflow-hidden transform origin-top transition-all animate-in fade-in slide-in-from-top-2">
-                                    <ul className="py-2 max-h-64 overflow-y-auto">
+                                    {/* Added max-h-64 and overflow-y-auto for desktop scroll */}
+                                    <ul className="py-2 max-h-64 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-transparent">
                                         {topic.files.map((file) => {
                                             const slug = file.name.replace(/\.md$/, '');
                                             return (
@@ -59,7 +66,7 @@ export default function Navbar() {
                     ))}
                 </div>
 
-                {/* Mobile */}
+                {/* Mobile Header */}
                 <div className="md:hidden flex justify-between items-center py-1">
                     <Link
                         href="/"
@@ -81,28 +88,41 @@ export default function Navbar() {
                     </button>
                 </div>
 
+                {/* Mobile Menu Content */}
                 {isMobileOpen && (
-                    <div className="mt-4 pb-4 md:hidden space-y-4 border-t border-slate-800/80 pt-4 animate-in fade-in slide-in-from-top-2">
+                    <div className="mt-4 pb-4 md:hidden space-y-2 border-t border-slate-800/80 pt-4 animate-in fade-in slide-in-from-top-2">
                         {topics.map((topic) => (
-                            <div key={topic.topic}>
-                                <div className="text-blue-400 font-semibold text-xs uppercase tracking-widest mb-2 px-1">
+                            <div key={topic.topic} className="flex flex-col">
+                                {/* Topic Toggle Button */}
+                                <button
+                                    onClick={() => toggleMobileTopic(topic.topic)}
+                                    className="flex justify-between items-center w-full text-blue-400 font-semibold text-xs uppercase tracking-widest py-3 px-2 hover:bg-slate-900/50 rounded-lg transition-colors"
+                                >
                                     {topic.topic}
-                                </div>
-                                <div className="space-y-1 bg-slate-900/50 rounded-lg p-2 border border-slate-800/50">
-                                    {topic.files.map((file) => {
-                                        const slug = file.name.replace(/\.md$/, '');
-                                        return (
-                                            <Link
-                                                key={file.path}
-                                                href={`/note/${topic.topic}/${slug}`}
-                                                className="block text-slate-300 hover:text-white hover:bg-slate-800/80 rounded-md px-3 py-2 text-sm transition-colors"
-                                                onClick={() => setIsMobileOpen(false)}
-                                            >
-                                                {slug}
-                                            </Link>
-                                        );
-                                    })}
-                                </div>
+                                    <svg className={`w-4 h-4 transition-transform ${mobileExpandedTopic === topic.topic ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                                </button>
+
+                                {/* Nested Files List with Scroll */}
+                                {mobileExpandedTopic === topic.topic && (
+                                    <div className="mt-1 space-y-1 bg-slate-900/50 rounded-lg p-2 border border-slate-800/50 max-h-48 overflow-y-auto">
+                                        {topic.files.map((file) => {
+                                            const slug = file.name.replace(/\.md$/, '');
+                                            return (
+                                                <Link
+                                                    key={file.path}
+                                                    href={`/note/${topic.topic}/${slug}`}
+                                                    className="block text-slate-300 hover:text-white hover:bg-slate-800/80 rounded-md px-3 py-2.5 text-sm transition-colors"
+                                                    onClick={() => {
+                                                        setIsMobileOpen(false);
+                                                        setMobileExpandedTopic(null);
+                                                    }}
+                                                >
+                                                    {slug}
+                                                </Link>
+                                            );
+                                        })}
+                                    </div>
+                                )}
                             </div>
                         ))}
                     </div>
