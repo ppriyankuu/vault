@@ -46,7 +46,7 @@ export default function HomePageContent() {
                 <div className='flex gap-2 ml-2 items-center'>
                     <h3 className='font-mono'>Github</h3>
                     <a
-                        href="https://github.com/ppriyankuu/doc"
+                        href="https://github.com/ppriyankuu"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="p-2 rounded-lg border border-slate-700/50 hover:border-slate-500 hover:bg-slate-700/40 transition-all"
