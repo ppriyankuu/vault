@@ -1,4 +1,4 @@
-import { GitHubFile, TopicNotes } from "@/types";
+import { GitHubFile, TopicNotes, Note } from "@/types";
 
 const OWNER = process.env.GITHUB_OWNER ?? "ppriyankuu";
 const REPO = process.env.GITHUB_REPO ?? "doc";
@@ -125,4 +125,36 @@ export async function fetchFileLastCommitDate(filePath: string): Promise<string 
         return commits[0].commit.committer.date;
     }
     return null;
+}
+
+export async function fetchSearchIndex(): Promise<Note[]> {
+    const url = `https://api.github.com/repos/${OWNER}/${REPO}/contents/search_index.json?ref=${BRANCH}`;
+
+    const headers: HeadersInit = {
+        Accept: "application/vnd.github.v3+json",
+    };
+
+    if (GITHUB_TOKEN) {
+        headers.Authorization = `Bearer ${GITHUB_TOKEN}`;
+    }
+
+    const res = await fetch(url, {
+        headers,
+        next: { revalidate: 60 },
+    });
+
+    if (!res.ok) {
+        if (res.status === 404) {
+            console.warn("search_index.json not found. Make sure the GitHub Action has run.");
+            return [];
+        }
+        throw new Error(`Failed to fetch search_index.json: ${res.status}`);
+    }
+
+    const data = await res.json();
+
+    // GitHub returns base64-encoded content
+    const decoded = Buffer.from(data.content, "base64").toString("utf-8");
+
+    return JSON.parse(decoded);
 }
