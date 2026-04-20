@@ -23,6 +23,7 @@ vault new         # create a new note
 vault list        # list all notes
 vault open        # open an existing note in Vim
 vault delete      # delete a note
+vault cleanup     # delete empty directories
 vault search      # search notes
 vault restore     # view git history and restore notes
 vault sync        # sync notes using git

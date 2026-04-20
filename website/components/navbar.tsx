@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useNotes } from '@/context';
 
 export default function Navbar() {
@@ -10,6 +10,21 @@ export default function Navbar() {
     const [isMobileOpen, setIsMobileOpen] = useState(false);
     // New state for mobile accordion
     const [mobileExpandedTopic, setMobileExpandedTopic] = useState<string | null>(null);
+
+    const navRef = useRef<HTMLDivElement | null>(null);
+
+    useEffect(() => {
+        function handleClickOutside(event: MouseEvent) {
+            if (navRef.current && !navRef.current.contains(event.target as Node)) {
+                setOpenTopic(null);
+            }
+        }
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
 
     const toggleTopic = (topic: string) => {
         setOpenTopic(openTopic === topic ? null : topic);
@@ -20,7 +35,7 @@ export default function Navbar() {
     };
 
     return (
-        <nav className="bg-slate-950/80 backdrop-blur-md border-b border-slate-800/60 sticky top-0 z-40 shadow-sm">
+        <nav ref={navRef} className="bg-slate-950/80 backdrop-blur-md border-b border-slate-800/60 sticky top-0 z-40 shadow-sm">
             <div className="max-w-7xl mx-auto px-4 py-3">
                 {/* Desktop */}
                 <div className="hidden md:flex gap-3 flex-wrap items-center">

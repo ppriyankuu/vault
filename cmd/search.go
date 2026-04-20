@@ -82,8 +82,8 @@ func searchCommand(cmd *cobra.Command, args []string) error {
 	var relativePaths []string
 	for _, line := range outputLines {
 		if rel, err := filepath.Rel(cfg.Root, line); err == nil {
-			// Remove .txt extension for display
-			rel = strings.TrimSuffix(rel, ".txt")
+			// Remove .md extension for display
+			rel = strings.TrimSuffix(rel, ".md")
 			relativePaths = append(relativePaths, rel)
 		}
 	}
