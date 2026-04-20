@@ -13,7 +13,8 @@ export default function HomePageContent() {
         return (
             note.title.toLowerCase().includes(query) ||
             note.topic.toLowerCase().includes(query) ||
-            (note.excerpt && note.excerpt.toLowerCase().includes(query))
+            (note.excerpt && note.excerpt.toLowerCase().includes(query)) ||
+            (note.content && note.content.toLowerCase().includes(query))
         );
     });
 
