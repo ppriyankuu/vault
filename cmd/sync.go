@@ -18,9 +18,9 @@ var syncCmd = &cobra.Command{
 		}
 
 		commands := [][]string{
-			{"git", "pull", "origin", "main"},
 			{"git", "add", "."},
 			{"git", "commit", "-m", "vault sync"},
+			{"git", "pull", "--rebase", "origin", "main"},
 			{"git", "push", "origin", "main"},
 		}
 
