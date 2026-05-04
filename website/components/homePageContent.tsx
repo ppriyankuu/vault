@@ -39,7 +39,7 @@ export default function HomePageContent() {
                 shadow-[0_8px_30px_rgb(0,0,0,0.4)]
                 backdrop-blur-md
             ">
-                <h1 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 to-yellow-200 tracking-tight">
+                <h1 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-linear-to-r from-yellow-500 to-yellow-200 tracking-tight">
                     Vault of Notes.
                 </h1>
 

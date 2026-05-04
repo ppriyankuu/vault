@@ -22,8 +22,8 @@ export default function NoteCard({ post }: CardProps) {
         overflow-hidden
       ">
                 {/* Subtle gradient overlay on hover */}
-                <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-150"></div>
-                
+                <div className="absolute inset-0 bg-linear-to-br from-yellow-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-150"></div>
+
                 {/* Title */}
                 <h3 className="relative text-xl font-bold text-neutral-100 mb-3 line-clamp-2 leading-tight group-hover:text-yellow-400 transition-colors duration-150 z-10">
                     {post.title}

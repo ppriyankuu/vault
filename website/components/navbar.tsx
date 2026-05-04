@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useState, useRef, useEffect } from 'react';
 import { useNotes } from '@/context';
+import { formatSlug } from '@/lib/markdown';
 
 export default function Navbar() {
     const { topics } = useNotes();
@@ -69,7 +70,7 @@ export default function Navbar() {
                                                         className="block px-4 py-2.5 text-sm text-neutral-300 hover:text-white hover:bg-yellow-500/10 transition-colors"
                                                         onClick={() => setOpenTopic(null)}
                                                     >
-                                                        {slug}
+                                                        {formatSlug(slug)}
                                                     </Link>
                                                 </li>
                                             );
@@ -132,7 +133,7 @@ export default function Navbar() {
                                                         setMobileExpandedTopic(null);
                                                     }}
                                                 >
-                                                    {slug}
+                                                    {formatSlug(slug)}
                                                 </Link>
                                             );
                                         })}

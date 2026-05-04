@@ -28,3 +28,7 @@ export function parseMarkdown(
         topic,
     };
 }
+
+export function formatSlug(slug: string) {
+    return slug.replace(/-/g, " ");
+}
