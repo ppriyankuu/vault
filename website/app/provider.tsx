@@ -10,7 +10,7 @@ export default async function NotesProviderServer({
 }) {
     let topics: TopicNotes[] = [];
     let notePosts: Note[] = [];
-    
+
     try {
         topics = await fetchTopicsWithNotes();
 
@@ -40,9 +40,9 @@ export default async function NotesProviderServer({
             );
             notePosts = await Promise.all(promises);
         }
-        
+
         notePosts.sort(
-            (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+            (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
         );
     } catch (error) {
         console.error("Error fetching notes in provider:", error);
